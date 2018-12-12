@@ -61,7 +61,6 @@ class Fignoss_dl:
 def main2():
     list_names = get_html_files_names()
     for filename in list_names:
-        # output directory for images
         outdir = filename.split(".")[0]
         if not os.path.isdir(outdir):
             os.mkdir(outdir)
