@@ -6,7 +6,6 @@ import numpy as np
 import argparse
 import cv2
 
-# construct the argument parse and parse the arguments
 ap = argparse.ArgumentParser()
 ap.add_argument("-i", "--image", required=False,
 	help="path to input image")
@@ -25,8 +24,7 @@ args = { 'image' : 'img_1125.jpg',
  		'confidence': 0.1	}
 print(args)
 
-# load our serialized model from disk
-# load AI model from the model file, net is the name of AI
+# load AI model from the model file, AI is named after net
 print("[INFO] loading model...")
 net = cv2.dnn.readNetFromCaffe(args["prototxt"], args["model"])
 
@@ -41,8 +39,7 @@ image = cv2.imread(args["image"])
 blob = cv2.dnn.blobFromImage(cv2.resize(image, (300, 300)), 1.0,
 	(300, 300), (104.0, 177.0, 123.0))
 
-# pass the blob through the network and obtain the detections and
-# predictions
+# pass the blob through the network and obtain the detections and predictions
 print("[INFO] computing object detections...")
 # set the blob to be the input of the AI
 net.setInput(blob)
@@ -52,12 +49,11 @@ detections = net.forward()
 people_counter = 0
 # loop over the detected faces (contained in the list 'detections')
 for i in range(0, detections.shape[2]):
-	# extract the confidence (i.e., probability) associated with the
-	# prediction
+	# extract the 
+	(i.e., probability) associated with the prediction
 	confidence = detections[0, 0, i, 2]
 
-	# filter out weak detections by ensuring the `confidence` is
-	# greater than the minimum confidence
+	# loop the detection that has a confidence than the set one
 	if confidence > args["confidence"]:
 		people_counter += 1
 
@@ -79,7 +75,7 @@ for i in range(0, detections.shape[2]):
 		cv2.putText(image, text, (startX, y),
 			cv2.FONT_HERSHEY_SIMPLEX, 0.45, (0, 0, 255), 2)
 
-# show the output image
+# output
 cv2.imshow("Output", image)
 cv2.waitKey(0)
 print('Our amazing sofware detected %s faces, hell yeah' % people_counter)
